@@ -1,5 +1,4 @@
 const Reducer = function ( state = { birds: [], filterText: '' }, action ) {
-  console.log(action)
 
   switch (action.type) {
     case 'BIRDS_LOADED':

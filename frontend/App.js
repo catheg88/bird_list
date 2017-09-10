@@ -5,12 +5,16 @@ import Store from './Store'
 import BirdListContainer from './components/BirdListContainer'
 import SearchBarContainer from './components/SearchBarContainer'
 import Birds from '../data/birds'
+import MapContainer from './components/MapContainer.jsx'
+
+console.log(process.env)
 
 class App extends React.Component {
   render() {
     return (
       <Provider store={Store} >
         <div>
+          <MapContainer />
           <SearchBarContainer />
           <BirdListContainer />
         </div>

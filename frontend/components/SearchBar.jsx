@@ -8,7 +8,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="searchBar">
         <input type="text" onChange={this.helperHandleTextChange.bind(this)}></input>
       </div>
     )

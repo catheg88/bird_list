@@ -7,12 +7,12 @@ class BirdList extends React.Component {
     var birdCounter = 0
     this.props.birds.forEach (function(bird) {
       if (filterText === '') {
-        birdEls.push(<BirdListEl comName={bird.comName} />)
+        birdEls.push(<BirdListEl comName={bird.comName} key={bird.comName} />)
         birdCounter++
       } else {
         for (var index = 0; index < (bird.comName.length - filterText.length + 1 ); index++) {
           if (bird.comName.slice(index, index + filterText.length).toLowerCase() === filterText) {
-            birdEls.push(<BirdListEl comName={bird.comName} />)
+            birdEls.push(<BirdListEl comName={bird.comName} key={bird.comName}/>)
             birdCounter++
             break
            }
@@ -21,7 +21,7 @@ class BirdList extends React.Component {
 
     })
     return (
-      <div>
+      <div id="birdList">
         <div>{birdCounter} results</div>
         <div>{birdEls}</div>
       </div>

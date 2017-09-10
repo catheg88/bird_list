@@ -2,7 +2,7 @@ module.exports = {
   entry: './frontend/app.js',
   output: {
     path: __dirname,
-    filename: 'bundle.js',
+    filename: './frontend/bundle.js',
   },
   module: {
     loaders: [
@@ -19,5 +19,8 @@ module.exports = {
   devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx' ]
+  },
+  node: {
+    fs: 'empty'
   }
 };
