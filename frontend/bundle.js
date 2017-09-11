@@ -42932,7 +42932,7 @@ var BirdListEl = function (_React$Component) {
         _react2.default.createElement(
           'button',
           { type: 'button', onClick: function onClick() {
-              return _this2.props.addBird.bind(_this2)(_this2);
+              return _this2.props.addBird.bind(_this2)(_this2.props);
             } },
           'add'
         )

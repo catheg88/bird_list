@@ -8,7 +8,7 @@ class BirdListEl extends React.Component {
     return (
       <div>
         <a href={link} target="blank">{this.props.comName}</a>
-        <button type="button" onClick={() => this.props.addBird.bind(this)(this)}>add</button>
+        <button type="button" onClick={() => this.props.addBird.bind(this)(this.props)}>add</button>
       </div>
     )
   }
