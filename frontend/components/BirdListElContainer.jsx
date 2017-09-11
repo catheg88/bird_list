@@ -9,7 +9,6 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-
 const BirdListElContainer = connect(
   null,
   mapDispatchToProps

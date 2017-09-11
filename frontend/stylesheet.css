@@ -21,3 +21,11 @@ html {
 #birdList {
   margin: 1px;
 }
+
+#listFlexContainer {
+  display: flex
+}
+
+#listFlexContainer > div {
+  width: 50%;
+}

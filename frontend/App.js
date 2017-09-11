@@ -6,6 +6,7 @@ import BirdListContainer from './components/BirdListContainer'
 import SearchBarContainer from './components/SearchBarContainer'
 import Birds from '../data/birds'
 import MapContainer from './components/MapContainer.jsx'
+import MyBirdsContainer from './components/MyBirdsContainer'
 import PouchDB from 'pouchdb'
 import Actions from './Actions'
 
@@ -18,7 +19,10 @@ class App extends React.Component {
         <div>
           <MapContainer />
           <SearchBarContainer />
-          <BirdListContainer />
+          <div id="listFlexContainer">
+            <BirdListContainer />
+            <MyBirdsContainer />
+          </div>
         </div>
       </Provider >
     )

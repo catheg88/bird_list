@@ -12019,6 +12019,10 @@ var _MapContainer = __webpack_require__(240);
 
 var _MapContainer2 = _interopRequireDefault(_MapContainer);
 
+var _MyBirdsContainer = __webpack_require__(277);
+
+var _MyBirdsContainer2 = _interopRequireDefault(_MyBirdsContainer);
+
 var _pouchdb = __webpack_require__(260);
 
 var _pouchdb2 = _interopRequireDefault(_pouchdb);
@@ -12057,7 +12061,12 @@ var App = function (_React$Component) {
           null,
           _react2.default.createElement(_MapContainer2.default, null),
           _react2.default.createElement(_SearchBarContainer2.default, null),
-          _react2.default.createElement(_BirdListContainer2.default, null)
+          _react2.default.createElement(
+            'div',
+            { id: 'listFlexContainer' },
+            _react2.default.createElement(_BirdListContainer2.default, null),
+            _react2.default.createElement(_MyBirdsContainer2.default, null)
+          )
         )
       );
     }
@@ -25609,7 +25618,9 @@ var Reducer = function Reducer() {
         filterText: action.text
       });
     case 'ADD_BIRD':
-      console.log(action);
+      return Object.assign({}, state, {
+        myBirds: state.myBirds.concat(action.bird)
+      });
       return state;
     default:
       return state;
@@ -25701,7 +25712,6 @@ var BirdList = function (_React$Component) {
       var birdCounter = 0;
       this.props.birds.forEach(function (bird) {
         if (filterText === '') {
-          // birdEls.push(<BirdListElContainer comName={bird.comName} key={bird.comName} />)
           birdEls.push(_react2.default.createElement(_BirdListElContainer2.default, _extends({}, bird, { key: bird.comName })));
           birdCounter++;
         } else {
@@ -42919,7 +42929,6 @@ var BirdListEl = function (_React$Component) {
       var _this2 = this;
 
       var searchComName = this.props.comName.replace(' ', '+');
-      // console.log(searchComName)
       var link = "https://www.google.com/search?tbm=isch&q=" + searchComName;
       return _react2.default.createElement(
         'div',
@@ -43039,6 +43048,144 @@ Object.defineProperty(exports, "__esModule", {
 var BIRDS_LOADED = exports.BIRDS_LOADED = 'BIRDS_LOADED';
 var TEXT_CHANGE = exports.TEXT_CHANGE = 'TEXT_CHANGE';
 var ADD_BIRD = exports.ADD_BIRD = 'ADD_BIRD';
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _MyBirds = __webpack_require__(278);
+
+var _MyBirds2 = _interopRequireDefault(_MyBirds);
+
+var _reactRedux = __webpack_require__(53);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    myBirds: state.myBirds
+  };
+};
+
+var MyBirdsContainer = (0, _reactRedux.connect)(mapStateToProps, null)(_MyBirds2.default);
+
+exports.default = MyBirdsContainer;
+
+/***/ }),
+/* 278 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _MyBirdsListEl = __webpack_require__(279);
+
+var _MyBirdsListEl2 = _interopRequireDefault(_MyBirdsListEl);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MyBirds = function (_React$Component) {
+  _inherits(MyBirds, _React$Component);
+
+  function MyBirds() {
+    _classCallCheck(this, MyBirds);
+
+    return _possibleConstructorReturn(this, (MyBirds.__proto__ || Object.getPrototypeOf(MyBirds)).apply(this, arguments));
+  }
+
+  _createClass(MyBirds, [{
+    key: 'render',
+    value: function render() {
+      var myBirdsEls = [];
+      this.props.myBirds.forEach(function (bird) {
+        console.log(bird);
+        myBirdsEls.push(_react2.default.createElement(_MyBirdsListEl2.default, { comName: bird.comName, key: bird.comName }));
+      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        myBirdsEls
+      );
+    }
+  }]);
+
+  return MyBirds;
+}(_react2.default.Component);
+
+exports.default = MyBirds;
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MyBirdsListEl = function (_React$Component) {
+  _inherits(MyBirdsListEl, _React$Component);
+
+  function MyBirdsListEl() {
+    _classCallCheck(this, MyBirdsListEl);
+
+    return _possibleConstructorReturn(this, (MyBirdsListEl.__proto__ || Object.getPrototypeOf(MyBirdsListEl)).apply(this, arguments));
+  }
+
+  _createClass(MyBirdsListEl, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        this.props.comName
+      );
+    }
+  }]);
+
+  return MyBirdsListEl;
+}(_react2.default.Component);
+
+exports.default = MyBirdsListEl;
 
 /***/ })
 /******/ ]);

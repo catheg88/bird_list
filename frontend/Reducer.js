@@ -17,7 +17,9 @@ const Reducer = function ( state = initialState, action ) {
         filterText: action.text
       })
     case 'ADD_BIRD':
-      console.log(action)
+      return Object.assign({}, state, {
+        myBirds: state.myBirds.concat(action.bird)
+      })
       return state
     default:
       return state
