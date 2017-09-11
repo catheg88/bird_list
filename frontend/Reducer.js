@@ -1,4 +1,11 @@
-const Reducer = function ( state = { birds: [], filterText: '' }, action ) {
+const initialState = {
+  birds: [],
+  filterText: '',
+  myBirds: []
+}
+
+const Reducer = function ( state = initialState, action ) {
+  console.log('dispatch: ' + action.type)
 
   switch (action.type) {
     case 'BIRDS_LOADED':
@@ -9,6 +16,9 @@ const Reducer = function ( state = { birds: [], filterText: '' }, action ) {
       return Object.assign({}, state, {
         filterText: action.text
       })
+    case 'ADD_BIRD':
+      console.log(action)
+      return state
     default:
       return state
   }

@@ -6,8 +6,10 @@ import BirdListContainer from './components/BirdListContainer'
 import SearchBarContainer from './components/SearchBarContainer'
 import Birds from '../data/birds'
 import MapContainer from './components/MapContainer.jsx'
+import PouchDB from 'pouchdb'
+import Actions from './Actions'
 
-console.log(process.env)
+// var db = new PouchDB('http://localhost:5984/birds')
 
 class App extends React.Component {
   render() {
@@ -56,9 +58,5 @@ for (var key in Birds) {
   birdNameArray.push(birdObject)
 }
 
-Store.dispatch({
-  type: 'BIRDS_LOADED',
-  birds: Birds
-})
-
+Store.dispatch(Actions.birdsLoaded(Birds))
 window.Store = Store

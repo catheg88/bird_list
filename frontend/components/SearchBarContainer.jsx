@@ -1,11 +1,9 @@
 import { connect } from 'react-redux'
 import SearchBar from './SearchBar'
+import Actions from '../Actions'
 
 const mapDispatchToProps = dispatch => ({
-  handleTextChange: filterText => dispatch({
-    type: 'TEXT_CHANGE',
-    text: filterText
-  })
+  handleTextChange: filterText => dispatch(Actions.textChange(filterText))
 })
 
 const SearchBarContainer = connect(
