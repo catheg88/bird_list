@@ -14,7 +14,7 @@ class BirdList extends React.Component {
       } else {
         for (var index = 0; index < (bird.comName.length - filterText.length + 1 ); index++) {
           if (bird.comName.slice(index, index + filterText.length).toLowerCase() === filterText) {
-            birdEls.push(<BirdListElContainer comName={bird.comName} key={bird.comName}/>)
+            birdEls.push(<BirdListElContainer {...bird} key={bird.comName}/>)
             birdCounter++
             break
            }

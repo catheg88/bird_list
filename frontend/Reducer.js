@@ -1,3 +1,5 @@
+import db from '../data/pouchdb'
+
 const initialState = {
   birds: [],
   filterText: '',
@@ -5,7 +7,6 @@ const initialState = {
 }
 
 const Reducer = function ( state = initialState, action ) {
-  console.log('dispatch: ' + action.type)
 
   switch (action.type) {
     case 'BIRDS_LOADED':
@@ -17,10 +18,33 @@ const Reducer = function ( state = initialState, action ) {
         filterText: action.text
       })
     case 'ADD_BIRD':
+      console.log(action.bird)
+
+      var doc = Object.assign({}, action.bird, {
+        _id: action.bird.taxonID
+      })
+
+      db.put(doc).then(function (doc) {
+        console.log("success writing to db")
+      }).catch(function (err) {
+        window.err = err
+        console.log("error: ")
+        console.log(err)
+      })
+
+      var alreadyInMyBirds = false
+      state.myBirds.forEach(function(bird){
+        if (bird.taxonID === action.bird.taxonID) {
+          alreadyInMyBirds = true
+        }
+      })
+      if (alreadyInMyBirds) {
+        return state
+      }
+
       return Object.assign({}, state, {
         myBirds: state.myBirds.concat(action.bird)
       })
-      return state
     default:
       return state
   }

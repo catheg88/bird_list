@@ -5,7 +5,6 @@ class MyBirds extends React.Component {
   render() {
     var myBirdsEls = []
     this.props.myBirds.forEach (function(bird) {
-      console.log(bird)
       myBirdsEls.push(<MyBirdsListEl comName={bird.comName} key={bird.comName} />)
     })
     return (

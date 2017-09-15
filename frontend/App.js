@@ -7,10 +7,8 @@ import SearchBarContainer from './components/SearchBarContainer'
 import Birds from '../data/birds'
 import MapContainer from './components/MapContainer.jsx'
 import MyBirdsContainer from './components/MyBirdsContainer'
-import PouchDB from 'pouchdb'
+import db from '../data/pouchdb'
 import Actions from './Actions'
-
-// var db = new PouchDB('http://localhost:5984/birds')
 
 class App extends React.Component {
   render() {

@@ -13,8 +13,21 @@ const Actions = {
 
   addBird: bird => ({
     type: T.ADD_BIRD,
-    bird: bird
-  })
+    bird
+  }),
+
+  addMyBirdToDB: bird => {
+    return function(dispatch) {
+
+
+      {
+        type: T.ADD_MY_BIRD_TO_DB,
+        bird
+      }
+
+    }
+  }
+
 }
 
 export default Actions
