@@ -7,15 +7,15 @@ import SearchBarContainer from './components/SearchBarContainer'
 import Birds from '../data/birds'
 import MapContainer from './components/MapContainer.jsx'
 import MyBirdsContainer from './components/MyBirdsContainer'
-import db from '../data/pouchdb'
 import Actions from './Actions'
+import db from '../data/pouchDb'
+
 
 class App extends React.Component {
   render() {
     return (
       <Provider store={Store} >
         <div>
-          <MapContainer />
           <SearchBarContainer />
           <div id="listFlexContainer">
             <BirdListContainer />
@@ -60,5 +60,14 @@ for (var key in Birds) {
   birdNameArray.push(birdObject)
 }
 
+db.allDocs({include_docs: true}).then(function(docs){
+  var _myBirds = []
+  docs.rows.forEach(function(bird){
+    _myBirds.push(bird.doc)
+  })
+  Store.dispatch(Actions.setMyBirds(_myBirds))
+})
+
 Store.dispatch(Actions.birdsLoaded(Birds))
+
 window.Store = Store

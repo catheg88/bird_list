@@ -1,4 +1,5 @@
-import db from '../data/pouchdb'
+import * as T from './ActionConstants'
+import db from '../data/pouchDb'
 
 const initialState = {
   birds: [],
@@ -7,41 +8,31 @@ const initialState = {
 }
 
 const Reducer = function ( state = initialState, action ) {
-
+  console.log(action.type)
   switch (action.type) {
-    case 'BIRDS_LOADED':
+    case T.BIRDS_LOADED:
       return Object.assign({}, state, {
         birds: action.birds
       })
-    case 'TEXT_CHANGE':
+    case T.TEXT_CHANGE:
       return Object.assign({}, state, {
         filterText: action.text
       })
-    case 'ADD_BIRD':
-      console.log(action.bird)
-
-      var doc = Object.assign({}, action.bird, {
-        _id: action.bird.taxonID
+    case T.SET_MY_BIRDS:
+      return Object.assign({}, state, {
+        myBirds: action.birds
       })
-
-      db.put(doc).then(function (doc) {
-        console.log("success writing to db")
-      }).catch(function (err) {
-        window.err = err
-        console.log("error: ")
-        console.log(err)
-      })
-
+    case T.ADD_BIRD_TO_MY_BIRDS:
       var alreadyInMyBirds = false
       state.myBirds.forEach(function(bird){
         if (bird.taxonID === action.bird.taxonID) {
           alreadyInMyBirds = true
+          console.log('already in MyBirds')
         }
       })
       if (alreadyInMyBirds) {
         return state
       }
-
       return Object.assign({}, state, {
         myBirds: state.myBirds.concat(action.bird)
       })

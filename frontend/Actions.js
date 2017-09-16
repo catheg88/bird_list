@@ -1,4 +1,5 @@
 import * as T from './ActionConstants'
+import db from '../data/pouchDb'
 
 const Actions = {
   birdsLoaded: birds => ({
@@ -11,22 +12,29 @@ const Actions = {
     text: filterText
   }),
 
-  addBird: bird => ({
-    type: T.ADD_BIRD,
-    bird
+  setMyBirds: birds => ({
+    type: T.SET_MY_BIRDS,
+    birds
   }),
 
-  addMyBirdToDB: bird => {
-    return function(dispatch) {
+  addBird: bird => (
+    function(dispatch) {
+      var doc = Object.assign({}, bird, {
+        _id: bird.taxonID
+      })
 
-
-      {
-        type: T.ADD_MY_BIRD_TO_DB,
-        bird
-      }
-
+      db.put(doc).then(function (doc) {
+        console.log("success writing to db")
+        dispatch({
+          type: T.ADD_BIRD_TO_MY_BIRDS,
+          bird
+        })
+      }).catch(function (err) {
+        console.log("error: ")
+        console.log(err)
+      })
     }
-  }
+  )
 
 }
 
