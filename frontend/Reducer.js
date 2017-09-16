@@ -18,10 +18,12 @@ const Reducer = function ( state = initialState, action ) {
       return Object.assign({}, state, {
         filterText: action.text
       })
+
     case T.SET_MY_BIRDS:
       return Object.assign({}, state, {
         myBirds: action.birds
       })
+
     case T.ADD_BIRD_TO_MY_BIRDS:
       var alreadyInMyBirds = false
       state.myBirds.forEach(function(bird){
@@ -36,6 +38,19 @@ const Reducer = function ( state = initialState, action ) {
       return Object.assign({}, state, {
         myBirds: state.myBirds.concat(action.bird)
       })
+
+    case T.REMOVE_BIRD_FROM_MY_BIRDS:
+      var _myBirds = []
+      state.myBirds.forEach(function(bird){
+        if (bird.taxonID === action.bird.taxonID) {
+          return
+        }
+        _myBirds.push(bird)
+      })
+      return Object.assign({}, state, {
+        myBirds: _myBirds
+      })
+
     default:
       return state
   }

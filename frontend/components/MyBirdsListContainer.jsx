@@ -1,13 +1,13 @@
-import MyBirds from './MyBirds'
+import MyBirdsList from './MyBirdsList'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
   myBirds: state.myBirds
 })
 
-const MyBirdsContainer = connect(
+const MyBirdsListContainer = connect(
   mapStateToProps,
   null
-)(MyBirds)
+)(MyBirdsList)
 
-export default MyBirdsContainer
+export default MyBirdsListContainer

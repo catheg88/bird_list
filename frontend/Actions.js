@@ -19,20 +19,39 @@ const Actions = {
 
   addBird: bird => (
     function(dispatch) {
-      var doc = Object.assign({}, bird, {
+
+      var _doc = Object.assign({}, bird, {
         _id: bird.taxonID
       })
-
-      db.put(doc).then(function (doc) {
-        console.log("success writing to db")
-        dispatch({
-          type: T.ADD_BIRD_TO_MY_BIRDS,
-          bird
+      db.put(_doc).then(function (doc) {
+        db.get(doc.id).then(function(retrievedBird){
+          console.log('successfully retrieved bird')
+          console.log(retrievedBird)
+          dispatch({
+            type: T.ADD_BIRD_TO_MY_BIRDS,
+            bird: retrievedBird
+          })
         })
       }).catch(function (err) {
-        console.log("error: ")
-        console.log(err)
+        console.log("db error: " + err.error + ": " + err.message)
       })
+    }
+  ),
+
+  removeBird: bird => (
+    function(dispatch) {
+      console.log(bird)
+      db.get(bird._id).then(function (retbird) {
+        return db.remove(retbird)
+      }).catch(function (err) {
+        console.log("db error : " + err.conflict + ": " + err.message)
+      })
+
+      dispatch({
+        type: T.REMOVE_BIRD_FROM_MY_BIRDS,
+        bird
+      })
+
     }
   )
 
