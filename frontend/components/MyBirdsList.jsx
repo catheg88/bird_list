@@ -3,13 +3,15 @@ import MyBirdsListElContainer from './MyBirdsListElContainer'
 
 class MyBirdsList extends React.Component {
   render() {
-    console.log(this.props)
     var myBirdsEls = []
     this.props.myBirds.forEach (function(bird) {
       myBirdsEls.push(<MyBirdsListElContainer {...bird} key={bird.comName} />)
     })
     return (
-      <div>{myBirdsEls}</div>
+      <div>
+        <h2>My Birds</h2>
+        <div>{myBirdsEls}</div>
+      </div>
     )
   }
 }

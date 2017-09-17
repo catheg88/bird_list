@@ -1,4 +1,5 @@
 import React from 'react'
+import SearchBarContainer from './SearchBarContainer'
 import BirdListElContainer from './BirdListElContainer'
 
 class BirdList extends React.Component {
@@ -23,6 +24,8 @@ class BirdList extends React.Component {
 
     return (
       <div id="birdList">
+        <h2>All Birds</h2>
+        <SearchBarContainer />
         <div>{birdCounter} results</div>
         <div>{birdEls}</div>
       </div>

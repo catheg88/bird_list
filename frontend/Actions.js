@@ -23,28 +23,31 @@ const Actions = {
       var _doc = Object.assign({}, bird, {
         _id: bird.taxonID
       })
+      dispatch({type: T.LOADING})
       db.put(_doc).then(function (doc) {
         db.get(doc.id).then(function(retrievedBird){
-          console.log('successfully retrieved bird')
-          console.log(retrievedBird)
           dispatch({
             type: T.ADD_BIRD_TO_MY_BIRDS,
             bird: retrievedBird
           })
+          dispatch({type: T.LOADED})
         })
       }).catch(function (err) {
         console.log("db error: " + err.error + ": " + err.message)
+        dispatch({type: T.LOADED})
       })
     }
   ),
 
   removeBird: bird => (
     function(dispatch) {
-      console.log(bird)
+      dispatch({type: T.LOADING})
       db.get(bird._id).then(function (retbird) {
+        dispatch({type: T.LOADED})
         return db.remove(retbird)
       }).catch(function (err) {
         console.log("db error : " + err.conflict + ": " + err.message)
+        dispatch({type: T.LOADED})
       })
 
       dispatch({

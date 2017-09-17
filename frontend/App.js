@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import Store from './Store'
 import BirdListContainer from './components/BirdListContainer'
-import SearchBarContainer from './components/SearchBarContainer'
-import Birds from '../data/birds'
+import Birds from '../data/birdsFull'
 import MapContainer from './components/MapContainer.jsx'
 import MyBirdsListContainer from './components/MyBirdsListContainer'
 import Actions from './Actions'
 import db from '../data/pouchDb'
+import ConnectedModal from './components/ConnectedModal'
+import Spinner from './components/Spinner'
 
 
 class App extends React.Component {
@@ -16,8 +17,11 @@ class App extends React.Component {
     return (
       <Provider store={Store} >
         <div>
-          <SearchBarContainer />
-          <div id="listFlexContainer">
+          <ConnectedModal >
+            <Spinner />
+          </ConnectedModal >
+          <MapContainer />
+          <div id="columnFlexContainer">
             <BirdListContainer />
             <MyBirdsListContainer />
           </div>
@@ -43,22 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
 //       birdObject.sciName = birds[key].sciName
 //       birdNameArray.push(birdObject)
 //     }
-//     Store.dispatch({
-//       type: 'BIRDS_LOADED',
-//       birds: birds
-//     })
+//     Store.dispatch(Actions.birdsLoaded(birds))
 //   }
 // }
 // xmlhttp.open("GET", "http://ebird.org/ws1.1/ref/taxa/ebird?cat=species&fmt=json", true)
 // xmlhttp.send()
 
-var birdNameArray = []
-for (var key in Birds) {
-  var birdObject = new Object()
-  birdObject.comName = Birds[key].comName
-  birdObject.sciName = Birds[key].sciName
-  birdNameArray.push(birdObject)
-}
+Store.dispatch(Actions.birdsLoaded(Birds))
 
 db.allDocs({include_docs: true}).then(function(docs){
   var _myBirds = []
@@ -67,7 +62,5 @@ db.allDocs({include_docs: true}).then(function(docs){
   })
   Store.dispatch(Actions.setMyBirds(_myBirds))
 })
-
-Store.dispatch(Actions.birdsLoaded(Birds))
 
 window.Store = Store

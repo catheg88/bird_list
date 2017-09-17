@@ -4,15 +4,16 @@ import db from '../data/pouchDb'
 const initialState = {
   birds: [],
   filterText: '',
-  myBirds: []
+  myBirds: [],
+  modalOpen: true
 }
 
 const Reducer = function ( state = initialState, action ) {
-  console.log(action.type)
   switch (action.type) {
     case T.BIRDS_LOADED:
       return Object.assign({}, state, {
-        birds: action.birds
+        birds: action.birds,
+        modalOpen: false
       })
     case T.TEXT_CHANGE:
       return Object.assign({}, state, {
@@ -49,6 +50,16 @@ const Reducer = function ( state = initialState, action ) {
       })
       return Object.assign({}, state, {
         myBirds: _myBirds
+      })
+
+    case T.LOADING:
+      return Object.assign({}, state, {
+        modalOpen: true
+      })
+      
+    case T.LOADED:
+      return Object.assign({}, state, {
+        modalOpen: false
       })
 
     default:

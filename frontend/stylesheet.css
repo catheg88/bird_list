@@ -22,10 +22,10 @@ html {
   margin: 1px;
 }
 
-#listFlexContainer {
+#columnFlexContainer {
   display: flex
 }
 
-#listFlexContainer > div {
+#columnFlexContainer > div {
   width: 50%;
 }
