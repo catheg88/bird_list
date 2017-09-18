@@ -56,7 +56,12 @@ const Actions = {
       })
 
     }
-  )
+  ),
+
+  addPin: pin => ({
+    type: T.ADD_PIN,
+    pin
+  })
 
 }
 

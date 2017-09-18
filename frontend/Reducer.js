@@ -5,10 +5,12 @@ const initialState = {
   birds: [],
   filterText: '',
   myBirds: [],
-  modalOpen: true
+  modalOpen: true,
+  pins: []
 }
 
 const Reducer = function ( state = initialState, action ) {
+  console.log(action.type)
   switch (action.type) {
     case T.BIRDS_LOADED:
       return Object.assign({}, state, {
@@ -56,10 +58,16 @@ const Reducer = function ( state = initialState, action ) {
       return Object.assign({}, state, {
         modalOpen: true
       })
-      
+
     case T.LOADED:
       return Object.assign({}, state, {
         modalOpen: false
+      })
+
+    case T.ADD_PIN:
+      console.log(action.pin)
+      return Object.assign({}, state, {
+        pins: state.pins.concat(action.pin)
       })
 
     default:

@@ -24,7 +24,7 @@ Modal.defaultStyles.content = {
 
 const mapStateToProps = state => ({
   isOpen: state.modalOpen,
-  contentType: "Modal"
+  contentLabel: "Modal"
 })
 
 const ConnectedModal = connect(

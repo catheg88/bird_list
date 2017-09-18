@@ -9,7 +9,7 @@ class MyBirdsList extends React.Component {
     })
     return (
       <div>
-        <h2>My Birds</h2>
+        <h2>MyBirds</h2>
         <div>{myBirdsEls}</div>
       </div>
     )
