@@ -1,5 +1,4 @@
 import * as T from './ActionConstants'
-import db from '../data/pouchDb'
 
 const initialState = {
   birds: [],
@@ -68,6 +67,11 @@ const Reducer = function ( state = initialState, action ) {
       console.log(action.pin)
       return Object.assign({}, state, {
         pins: state.pins.concat(action.pin)
+      })
+
+    case T.SET_PINS:
+      return Object.assign({}, state, {
+        pins: action.pins
       })
 
     default:

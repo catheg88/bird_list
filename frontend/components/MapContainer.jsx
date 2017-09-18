@@ -38,9 +38,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleClick: coords => {
-    console.log('coords')
-    console.log(coords)
-    dispatch(Actions.addPin(coords))
+    var _coords = {
+      lat: coords.lat,
+      lng: coords.lng
+    }
+    dispatch(Actions.addPin(_coords))
   }
 })
 

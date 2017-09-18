@@ -4851,9 +4851,13 @@ var _ActionConstants = __webpack_require__(100);
 
 var T = _interopRequireWildcard(_ActionConstants);
 
-var _pouchDb = __webpack_require__(58);
+var _PouchBirdDb = __webpack_require__(298);
 
-var _pouchDb2 = _interopRequireDefault(_pouchDb);
+var _PouchBirdDb2 = _interopRequireDefault(_PouchBirdDb);
+
+var _PouchPinDb = __webpack_require__(299);
+
+var _PouchPinDb2 = _interopRequireDefault(_PouchPinDb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4884,12 +4888,13 @@ var Actions = {
   addBird: function addBird(bird) {
     return function (dispatch) {
 
+      dispatch({ type: T.LOADING });
+
       var _doc = Object.assign({}, bird, {
         _id: bird.taxonID
       });
-      dispatch({ type: T.LOADING });
-      _pouchDb2.default.put(_doc).then(function (doc) {
-        _pouchDb2.default.get(doc.id).then(function (retrievedBird) {
+      _PouchBirdDb2.default.put(_doc).then(function (doc) {
+        _PouchBirdDb2.default.get(doc.id).then(function (retrievedBird) {
           dispatch({
             type: T.ADD_BIRD_TO_MY_BIRDS,
             bird: retrievedBird
@@ -4897,7 +4902,7 @@ var Actions = {
           dispatch({ type: T.LOADED });
         });
       }).catch(function (err) {
-        console.log("db error: " + err.error + ": " + err.message);
+        console.log("PouchBirdDb error: " + err.error + ": " + err.message);
         dispatch({ type: T.LOADED });
       });
     };
@@ -4906,11 +4911,11 @@ var Actions = {
   removeBird: function removeBird(bird) {
     return function (dispatch) {
       dispatch({ type: T.LOADING });
-      _pouchDb2.default.get(bird._id).then(function (retbird) {
+      _PouchBirdDb2.default.get(bird._id).then(function (retbird) {
         dispatch({ type: T.LOADED });
-        return _pouchDb2.default.remove(retbird);
+        return _PouchBirdDb2.default.remove(retbird);
       }).catch(function (err) {
-        console.log("db error : " + err.conflict + ": " + err.message);
+        console.log("PouchBirdDb error : " + err.conflict + ": " + err.message);
         dispatch({ type: T.LOADED });
       });
 
@@ -4922,9 +4927,33 @@ var Actions = {
   },
 
   addPin: function addPin(pin) {
+    return function (dispatch) {
+
+      dispatch({ type: T.LOADING });
+      console.log('pin.lat: ');
+      console.log(pin.lat);
+      var _doc = Object.assign({}, pin, {
+        _id: pin.lat.toString() + pin.lng.toString()
+      });
+      _PouchPinDb2.default.put(_doc).then(function (doc) {
+        _PouchPinDb2.default.get(doc.id).then(function (retrievedBird) {
+          dispatch({
+            type: T.ADD_PIN,
+            pin: pin
+          });
+          dispatch({ type: T.LOADED });
+        });
+      }).catch(function (err) {
+        console.log("PouchPinDb error: " + err.error + ": " + err.message);
+        dispatch({ type: T.LOADED });
+      });
+    };
+  },
+
+  setPins: function setPins(pins) {
     return {
-      type: T.ADD_PIN,
-      pin: pin
+      type: T.SET_PINS,
+      pins: pins
     };
   }
 
@@ -6873,27 +6902,7 @@ function isPlainObject(value) {
 
 
 /***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _pouchDB = __webpack_require__(239);
-
-var _pouchDB2 = _interopRequireDefault(_pouchDB);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var db = new _pouchDB2.default('http://localhost:5984/birds');
-
-exports.default = db;
-
-/***/ }),
+/* 58 */,
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11392,6 +11401,7 @@ var REMOVE_BIRD_FROM_MY_BIRDS = exports.REMOVE_BIRD_FROM_MY_BIRDS = 'REMOVE_BIRD
 var LOADING = exports.LOADING = 'LOADING';
 var LOADED = exports.LOADED = 'LOADED';
 var ADD_PIN = exports.ADD_PIN = 'ADD_PIN';
+var SET_PINS = exports.SET_PINS = 'SET_PINS';
 
 /***/ }),
 /* 101 */
@@ -12206,9 +12216,13 @@ var _Actions = __webpack_require__(37);
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
-var _pouchDb = __webpack_require__(58);
+var _PouchBirdDb = __webpack_require__(298);
 
-var _pouchDb2 = _interopRequireDefault(_pouchDb);
+var _PouchBirdDb2 = _interopRequireDefault(_PouchBirdDb);
+
+var _PouchPinDb = __webpack_require__(299);
+
+var _PouchPinDb2 = _interopRequireDefault(_PouchPinDb);
 
 var _ConnectedModal = __webpack_require__(287);
 
@@ -12288,12 +12302,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 _Store2.default.dispatch(_Actions2.default.birdsLoaded(_birds2.default));
 
-_pouchDb2.default.allDocs({ include_docs: true }).then(function (docs) {
+_PouchBirdDb2.default.allDocs({ include_docs: true }).then(function (docs) {
   var _myBirds = [];
   docs.rows.forEach(function (bird) {
     _myBirds.push(bird.doc);
   });
   _Store2.default.dispatch(_Actions2.default.setMyBirds(_myBirds));
+});
+
+_PouchPinDb2.default.allDocs({ include_docs: true }).then(function (docs) {
+  var _pins = [];
+  docs.rows.forEach(function (pin) {
+    _pins.push(pin.doc);
+  });
+  console.log('_pins: ');
+  console.log(_pins);
+  _Store2.default.dispatch(_Actions2.default.setPins(_pins));
 });
 
 window.Store = _Store2.default;
@@ -25794,12 +25818,6 @@ var _ActionConstants = __webpack_require__(100);
 
 var T = _interopRequireWildcard(_ActionConstants);
 
-var _pouchDb = __webpack_require__(58);
-
-var _pouchDb2 = _interopRequireDefault(_pouchDb);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var initialState = {
@@ -25872,6 +25890,11 @@ var Reducer = function Reducer() {
       console.log(action.pin);
       return Object.assign({}, state, {
         pins: state.pins.concat(action.pin)
+      });
+
+    case T.SET_PINS:
+      return Object.assign({}, state, {
+        pins: action.pins
       });
 
     default:
@@ -39748,9 +39771,11 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     handleClick: function handleClick(coords) {
-      console.log('coords');
-      console.log(coords);
-      dispatch(_Actions2.default.addPin(coords));
+      var _coords = {
+        lat: coords.lat,
+        lng: coords.lng
+      };
+      dispatch(_Actions2.default.addPin(_coords));
     }
   };
 };
@@ -43432,6 +43457,49 @@ var MapMarker = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = MapMarker;
+
+/***/ }),
+/* 297 */,
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _pouchDB = __webpack_require__(239);
+
+var _pouchDB2 = _interopRequireDefault(_pouchDB);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PouchBirdDb = new _pouchDB2.default('http://localhost:5984/birds');
+
+exports.default = PouchBirdDb;
+
+/***/ }),
+/* 299 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _pouchDB = __webpack_require__(239);
+
+var _pouchDB2 = _interopRequireDefault(_pouchDB);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PouchPinDd = new _pouchDB2.default('http://localhost:5984/pins');
+
+exports.default = PouchPinDd;
 
 /***/ })
 /******/ ]);

@@ -7,10 +7,10 @@ import Birds from '../data/birds'
 import MapContainer from './components/MapContainer.jsx'
 import MyBirdsListContainer from './components/MyBirdsListContainer'
 import Actions from './Actions'
-import db from '../data/pouchDb'
+import PouchBirdDb from '../data/PouchBirdDb'
+import PouchPinDb from '../data/PouchPinDb'
 import ConnectedModal from './components/ConnectedModal'
 import Spinner from './components/Spinner'
-
 
 class App extends React.Component {
   render() {
@@ -55,12 +55,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 Store.dispatch(Actions.birdsLoaded(Birds))
 
-db.allDocs({include_docs: true}).then(function(docs){
+PouchBirdDb.allDocs({include_docs: true}).then(function(docs){
   var _myBirds = []
   docs.rows.forEach(function(bird){
     _myBirds.push(bird.doc)
   })
   Store.dispatch(Actions.setMyBirds(_myBirds))
+})
+
+PouchPinDb.allDocs({include_docs: true}).then(function(docs){
+  var _pins = []
+  docs.rows.forEach(function(pin){
+    _pins.push(pin.doc)
+  })
+  console.log('_pins: ')
+  console.log(_pins)
+  Store.dispatch(Actions.setPins(_pins))
 })
 
 window.Store = Store
