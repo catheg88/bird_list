@@ -45,3 +45,9 @@ button {
   color: red;
   transform: translate(-8px, -45%);
 }
+
+.activeMapMarker {
+  font-size: 20px;
+  color: blue;
+  transform: translate(-8px, -75%);
+}

@@ -1,7 +1,8 @@
 import GOOGLE_API_KEY from '../../apiKey'
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import MapMarker from './MapMarker'
+import MapMarkerContainer from './MapMarkerContainer'
+import ActiveMapMarker from './ActiveMapMarker'
 import { connect } from 'react-redux'
 import Actions from '../Actions'
 
@@ -10,7 +11,11 @@ class MapContainer extends React.Component {
   render(){
     var pinComponents = []
     this.props.pins.forEach( pin => {
-      pinComponents.push(<MapMarker lat={pin.lat} lng={pin.lng} key={Math.random()}/>)
+      if (pin._id === this.props.activePin) {
+        pinComponents.push(<ActiveMapMarker lat={pin.lat} lng={pin.lng} id={pin._id}/>)
+      } else {
+      pinComponents.push(<MapMarkerContainer lat={pin.lat} lng={pin.lng} id={pin._id}/>)
+      }
     })
 
     return(
@@ -33,7 +38,8 @@ class MapContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  pins: state.pins
+  pins: state.pins,
+  activePin: state.activePin
 })
 
 const mapDispatchToProps = dispatch => ({

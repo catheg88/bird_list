@@ -64,8 +64,6 @@ const Actions = {
     function(dispatch) {
 
       dispatch({type: T.LOADING})
-      console.log('pin.lat: ')
-      console.log(pin.lat)
       var _doc = Object.assign({}, pin, {
         _id: pin.lat.toString() + pin.lng.toString()
       })
@@ -73,7 +71,7 @@ const Actions = {
         PouchPinDb.get(doc.id).then(function(retrievedBird){
           dispatch({
             type: T.ADD_PIN,
-            pin
+            retrievedBird
           })
           dispatch({type: T.LOADED})
         })
@@ -83,6 +81,11 @@ const Actions = {
       })
     }
   ),
+
+  setActivePin: pin => ({
+    type: T.SET_ACTIVE_PIN,
+    pin
+  }),
 
   setPins: pins => ({
     type: T.SET_PINS,

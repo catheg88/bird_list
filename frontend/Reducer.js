@@ -5,7 +5,8 @@ const initialState = {
   filterText: '',
   myBirds: [],
   modalOpen: true,
-  pins: []
+  pins: [],
+  activePin: null
 }
 
 const Reducer = function ( state = initialState, action ) {
@@ -63,10 +64,16 @@ const Reducer = function ( state = initialState, action ) {
         modalOpen: false
       })
 
-    case T.ADD_PIN:
-      console.log(action.pin)
+    case T.SET_ACTIVE_PIN:
+      console.log(action.pin.id)
       return Object.assign({}, state, {
-        pins: state.pins.concat(action.pin)
+        activePin: action.pin.id
+      })
+
+    case T.ADD_PIN:
+      return Object.assign({}, state, {
+        pins: state.pins.concat(action.retrievedBird),
+        activePin: action.retrievedBird._id
       })
 
     case T.SET_PINS:
