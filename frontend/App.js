@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import Store from './Store'
+import Actions from './Actions'
+
 import BirdListContainer from './components/BirdListContainer'
 import MapContainer from './components/map/MapContainer.jsx'
 import MyBirdsListContainer from './components/MyBirdsListContainer'
-
-import Actions from './Actions'
-
-import birdsShort from '../data/birdsShort'
-
-import PouchAppDb from '../data/PouchAppDb'
-
 import ConnectedModal from './components/modal/ConnectedModal'
 import Spinner from './components/modal/Spinner'
+
+
+import PouchAppDb from '../data/PouchAppDb'
+import birdsShort from '../data/birdsShort'
+
 
 class App extends React.Component {
   render() {
@@ -37,23 +37,11 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
-var birds
-var xmlhttp = new XMLHttpRequest()
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    birds = JSON.parse(this.responseText)
-    var birdNameArray = []
-    for (var key in birds) {
-      var birdObject = new Object()
-      birdObject.comName = birds[key].comName
-      birdObject.sciName = birds[key].sciName
-      birdNameArray.push(birdObject)
-    }
-    Store.dispatch(Actions.birdsLoaded(birds))
-  }
-}
-// xmlhttp.open("GET", "https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json", true)
-// xmlhttp.send()
+// lazily, we'll just ask the store to dispatch some initial setup requests itself
+
+fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
+  .then( res => res.json() )
+  .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
 
 Store.dispatch(Actions.birdsLoaded(birdsShort))
 

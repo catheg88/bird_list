@@ -15215,6 +15215,10 @@ var _Store = __webpack_require__(252);
 
 var _Store2 = _interopRequireDefault(_Store);
 
+var _Actions = __webpack_require__(29);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
 var _BirdListContainer = __webpack_require__(256);
 
 var _BirdListContainer2 = _interopRequireDefault(_BirdListContainer);
@@ -15227,18 +15231,6 @@ var _MyBirdsListContainer = __webpack_require__(290);
 
 var _MyBirdsListContainer2 = _interopRequireDefault(_MyBirdsListContainer);
 
-var _Actions = __webpack_require__(29);
-
-var _Actions2 = _interopRequireDefault(_Actions);
-
-var _birdsShort = __webpack_require__(294);
-
-var _birdsShort2 = _interopRequireDefault(_birdsShort);
-
-var _PouchAppDb = __webpack_require__(107);
-
-var _PouchAppDb2 = _interopRequireDefault(_PouchAppDb);
-
 var _ConnectedModal = __webpack_require__(295);
 
 var _ConnectedModal2 = _interopRequireDefault(_ConnectedModal);
@@ -15246,6 +15238,14 @@ var _ConnectedModal2 = _interopRequireDefault(_ConnectedModal);
 var _Spinner = __webpack_require__(303);
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
+
+var _PouchAppDb = __webpack_require__(107);
+
+var _PouchAppDb2 = _interopRequireDefault(_PouchAppDb);
+
+var _birdsShort = __webpack_require__(294);
+
+var _birdsShort2 = _interopRequireDefault(_birdsShort);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15295,23 +15295,13 @@ var App = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
-var birds;
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function () {
-  if (this.readyState == 4 && this.status == 200) {
-    birds = JSON.parse(this.responseText);
-    var birdNameArray = [];
-    for (var key in birds) {
-      var birdObject = new Object();
-      birdObject.comName = birds[key].comName;
-      birdObject.sciName = birds[key].sciName;
-      birdNameArray.push(birdObject);
-    }
-    _Store2.default.dispatch(_Actions2.default.birdsLoaded(birds));
-  }
-};
-// xmlhttp.open("GET", "https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json", true)
-// xmlhttp.send()
+// lazily, we'll just ask the store to dispatch some initial setup requests itself
+
+fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json').then(function (res) {
+  return res.json();
+}).then(function (json) {
+  return _Store2.default.dispatch(_Actions2.default.birdsLoaded(json));
+});
 
 _Store2.default.dispatch(_Actions2.default.birdsLoaded(_birdsShort2.default));
 
