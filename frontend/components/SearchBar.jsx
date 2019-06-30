@@ -11,7 +11,7 @@ class SearchBar extends React.Component {
           type="text"
           onChange={this.props.handleTextChange}
           placeholder="Search by bird name"
-          ></input>
+        ></input>
       </div>
     )
   }
@@ -19,7 +19,6 @@ class SearchBar extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   handleTextChange: e => {
-    console.log(e.target.value)
     dispatch(Actions.textChange(e.target.value))
   }
 })

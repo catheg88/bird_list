@@ -15219,9 +15219,9 @@ var _Actions = __webpack_require__(29);
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
-var _BirdListContainer = __webpack_require__(256);
+var _BirdList = __webpack_require__(257);
 
-var _BirdListContainer2 = _interopRequireDefault(_BirdListContainer);
+var _BirdList2 = _interopRequireDefault(_BirdList);
 
 var _MapContainer = __webpack_require__(269);
 
@@ -15255,6 +15255,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// local json bird taxonomy
+
+
+// import birdsFull from '../data/birdsFull'
+
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -15282,7 +15288,7 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { id: 'columnFlexContainer' },
-            _react2.default.createElement(_BirdListContainer2.default, null),
+            _react2.default.createElement(_BirdList2.default, null),
             _react2.default.createElement(_MyBirdsListContainer2.default, null)
           )
         )
@@ -15296,18 +15302,20 @@ var App = function (_React$Component) {
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
-fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json').then(function (res) {
-  return res.json();
-}).then(function (json) {
-  return _Store2.default.dispatch(_Actions2.default.birdsLoaded(json));
-});
 
+// api request to ebird for bird taxonony
+// fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
+//   .then( res => res.json() )
+//   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
+
+
+// load bird taxonony from local json
 _Store2.default.dispatch(_Actions2.default.birdsLoaded(_birdsShort2.default));
+// Store.dispatch(Actions.birdsLoaded(birdsFull))
 
 _PouchAppDb2.default.find({
   selector: { dataType: 'bird' }
 }).then(function (docs) {
-  console.log('find birds');
   var _myBirds = [];
   docs.docs.forEach(function (bird) {
     _myBirds.push(bird);
@@ -15318,8 +15326,6 @@ _PouchAppDb2.default.find({
 _PouchAppDb2.default.find({
   selector: { dataType: 'pin' }
 }).then(function (docs) {
-  console.log('find pins');
-  console.log(docs);
   var _pins = [];
   docs.docs.forEach(function (pin) {
     _pins.push(pin);
@@ -28953,40 +28959,7 @@ exports['default'] = thunk;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)))
 
 /***/ }),
-/* 256 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(5);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(13);
-
-var _BirdList = __webpack_require__(257);
-
-var _BirdList2 = _interopRequireDefault(_BirdList);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    birds: state.birds,
-    filterText: state.filterText
-  };
-};
-
-var BirdListContainer = (0, _reactRedux.connect)(mapStateToProps, null)(_BirdList2.default);
-
-exports.default = BirdListContainer;
-
-/***/ }),
+/* 256 */,
 /* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29004,6 +28977,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(13);
 
 var _SearchBar = __webpack_require__(258);
 
@@ -29033,9 +29008,7 @@ var BirdList = function (_React$Component) {
   _createClass(BirdList, [{
     key: 'render',
     value: function render() {
-      // console.log('this.props.filterText')
-      // console.log(this.props.filterText)
-      var filterText = this.props.filterText.toLowerCase();
+      var filterText = this.props.filterText;
       var birdEls = [];
       var birdCounter = 0;
       this.props.birds.forEach(function (bird) {
@@ -29079,6 +29052,15 @@ var BirdList = function (_React$Component) {
 
   return BirdList;
 }(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    birds: state.birds,
+    filterText: state.filterText
+  };
+};
+
+BirdList = (0, _reactRedux.connect)(mapStateToProps, null)(BirdList);
 
 exports.default = BirdList;
 
@@ -29143,7 +29125,6 @@ var SearchBar = function (_React$Component) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     handleTextChange: function handleTextChange(e) {
-      console.log(e.target.value);
       dispatch(_Actions2.default.textChange(e.target.value));
     }
   };
@@ -43193,7 +43174,8 @@ var MapContainer = function (_React$Component) {
           lng: pin.lng,
           id: pin._id,
           isActive: _this2.props.activePin === pin._id ? true : false,
-          setActivePin: _this2.props.setActivePin
+          setActivePin: _this2.props.setActivePin,
+          key: pin._id
         }));
       });
 
@@ -47223,7 +47205,6 @@ var Spinner = function (_React$Component) {
   _createClass(Spinner, [{
     key: 'render',
     value: function render() {
-      // <img src="/Users/atheg/Desktop/programming/redux_workshop/bird/assets/spinner.gif" />
       return _react2.default.createElement(
         'div',
         { id: 'spinner' },

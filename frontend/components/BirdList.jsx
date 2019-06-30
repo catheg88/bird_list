@@ -1,12 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import SearchBar from './SearchBar'
 import BirdListElContainer from './BirdListElContainer'
 
 class BirdList extends React.Component {
   render() {
-    // console.log('this.props.filterText')
-    // console.log(this.props.filterText)
-    var filterText = this.props.filterText.toLowerCase()
+    var filterText = this.props.filterText
     var birdEls = []
     var birdCounter = 0
     this.props.birds.forEach (function(bird) {
@@ -34,5 +34,15 @@ class BirdList extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  birds: state.birds,
+  filterText: state.filterText
+})
+
+BirdList = connect(
+  mapStateToProps,
+  null
+)(BirdList)
 
 export default BirdList

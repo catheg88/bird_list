@@ -19,6 +19,7 @@ class MapContainer extends React.Component {
             id={pin._id}
             isActive={this.props.activePin === pin._id ? true : false}
             setActivePin={this.props.setActivePin}
+            key={pin._id}
           />
         )
       }
