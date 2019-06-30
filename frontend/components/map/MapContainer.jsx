@@ -1,22 +1,28 @@
-import GOOGLE_API_KEY from '../../apiKey'
 import React from 'react'
-import GoogleMapReact from 'google-map-react'
-import MapMarkerContainer from './MapMarkerContainer'
-import ActiveMapMarker from './ActiveMapMarker'
 import { connect } from 'react-redux'
-import Actions from '../Actions'
+
+import GoogleMapReact from 'google-map-react'
+import GOOGLE_API_KEY from '../../../apiKey'
+
+import MapMarker from './MapMarker'
+import Actions from '../../Actions'
 
 class MapContainer extends React.Component {
 
   render(){
     var pinComponents = []
     this.props.pins.forEach( pin => {
-      if (pin._id === this.props.activePin) {
-        pinComponents.push(<ActiveMapMarker lat={pin.lat} lng={pin.lng} id={pin._id}/>)
-      } else {
-      pinComponents.push(<MapMarkerContainer lat={pin.lat} lng={pin.lng} id={pin._id}/>)
+        pinComponents.push(
+          <MapMarker
+            lat={pin.lat}
+            lng={pin.lng}
+            id={pin._id}
+            isActive={this.props.activePin === pin._id ? true : false}
+            setActivePin={this.props.setActivePin}
+          />
+        )
       }
-    })
+    )
 
     return(
       <div id="mapContainerFlexWrapper">
@@ -27,8 +33,8 @@ class MapContainer extends React.Component {
             }}
             center={[37.760155, -122.4739743]}
             zoom={12}
-            onClick={ (coords) => this.props.handleClick(coords) }
-            >
+            onClick={ coords => this.props.addPin(coords) }
+          >
             {pinComponents}
           </GoogleMapReact>
         </div>
@@ -43,12 +49,16 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleClick: coords => {
+  addPin: coords => {
+    // drop x and y axis data from coords, since the pin will be written to db
     var _coords = {
       lat: coords.lat,
       lng: coords.lng
     }
     dispatch(Actions.addPin(_coords))
+  },
+  setActivePin: id => {
+    dispatch(Actions.setActivePin(id))
   }
 })
 

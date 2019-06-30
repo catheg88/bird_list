@@ -1,16 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+
 import Store from './Store'
 import BirdListContainer from './components/BirdListContainer'
-import Birds from '../data/birds'
-import MapContainer from './components/MapContainer.jsx'
+import MapContainer from './components/map/MapContainer.jsx'
 import MyBirdsListContainer from './components/MyBirdsListContainer'
+
 import Actions from './Actions'
-import PouchBirdDb from '../data/PouchBirdDb'
-import PouchPinDb from '../data/PouchPinDb'
-import ConnectedModal from './components/ConnectedModal'
-import Spinner from './components/Spinner'
+
+import birdsShort from '../data/birdsShort'
+
+import PouchAppDb from '../data/PouchAppDb'
+
+import ConnectedModal from './components/modal/ConnectedModal'
+import Spinner from './components/modal/Spinner'
 
 class App extends React.Component {
   render() {
@@ -31,46 +35,47 @@ class App extends React.Component {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  ReactDOM.render(<App />, document.getElementById('root'))
-})
+ReactDOM.render(<App />, document.getElementById('root'))
 
-// var birds
-// var xmlhttp = new XMLHttpRequest()
-// xmlhttp.onreadystatechange = function() {
-//   if (this.readyState == 4 && this.status == 200) {
-//     birds = JSON.parse(this.responseText)
-//     var birdNameArray = []
-//     for (var key in birds) {
-//       var birdObject = new Object()
-//       birdObject.comName = birds[key].comName
-//       birdObject.sciName = birds[key].sciName
-//       birdNameArray.push(birdObject)
-//     }
-//     Store.dispatch(Actions.birdsLoaded(birds))
-//   }
-// }
-// xmlhttp.open("GET", "http://ebird.org/ws1.1/ref/taxa/ebird?cat=species&fmt=json", true)
+var birds
+var xmlhttp = new XMLHttpRequest()
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    birds = JSON.parse(this.responseText)
+    var birdNameArray = []
+    for (var key in birds) {
+      var birdObject = new Object()
+      birdObject.comName = birds[key].comName
+      birdObject.sciName = birds[key].sciName
+      birdNameArray.push(birdObject)
+    }
+    Store.dispatch(Actions.birdsLoaded(birds))
+  }
+}
+// xmlhttp.open("GET", "https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json", true)
 // xmlhttp.send()
 
-Store.dispatch(Actions.birdsLoaded(Birds))
+Store.dispatch(Actions.birdsLoaded(birdsShort))
 
-PouchBirdDb.allDocs({include_docs: true}).then(function(docs){
+PouchAppDb.find({
+  selector: { dataType: 'bird'}
+}).then(function(docs){
+  console.log('find birds')
   var _myBirds = []
-  docs.rows.forEach(function(bird){
-    _myBirds.push(bird.doc)
+  docs.docs.forEach(function(bird){
+    _myBirds.push(bird)
   })
   Store.dispatch(Actions.setMyBirds(_myBirds))
 })
 
-PouchPinDb.allDocs({include_docs: true}).then(function(docs){
+PouchAppDb.find({
+  selector: { dataType: 'pin' }
+}).then(function(docs){
+  console.log('find pins')
+  console.log(docs)
   var _pins = []
-  docs.rows.forEach(function(pin){
-    _pins.push(pin.doc)
+  docs.docs.forEach(function(pin){
+    _pins.push(pin)
   })
-  console.log('_pins: ')
-  console.log(_pins)
   Store.dispatch(Actions.setPins(_pins))
 })
-
-window.Store = Store

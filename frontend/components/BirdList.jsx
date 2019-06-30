@@ -1,9 +1,11 @@
 import React from 'react'
-import SearchBarContainer from './SearchBarContainer'
+import SearchBar from './SearchBar'
 import BirdListElContainer from './BirdListElContainer'
 
 class BirdList extends React.Component {
   render() {
+    console.log('this.props.filterText')
+    console.log(this.props.filterText)
     var filterText = this.props.filterText.toLowerCase()
     var birdEls = []
     var birdCounter = 0
@@ -25,7 +27,7 @@ class BirdList extends React.Component {
     return (
       <div id="birdList">
         <h2>All Birds</h2>
-        <SearchBarContainer />
+        <SearchBar />
         <div>{birdCounter} results</div>
         <div>{birdEls}</div>
       </div>

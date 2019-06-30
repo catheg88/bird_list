@@ -10,7 +10,6 @@ const initialState = {
 }
 
 const Reducer = function ( state = initialState, action ) {
-  console.log(action.type)
   switch (action.type) {
     case T.BIRDS_LOADED:
       return Object.assign({}, state, {
@@ -30,7 +29,7 @@ const Reducer = function ( state = initialState, action ) {
     case T.ADD_BIRD_TO_MY_BIRDS:
       var alreadyInMyBirds = false
       state.myBirds.forEach(function(bird){
-        if (bird.taxonID === action.bird.taxonID) {
+        if (bird.taxonOrder === action.bird.taxonOrder) {
           alreadyInMyBirds = true
           console.log('already in MyBirds')
         }
@@ -45,7 +44,7 @@ const Reducer = function ( state = initialState, action ) {
     case T.REMOVE_BIRD_FROM_MY_BIRDS:
       var _myBirds = []
       state.myBirds.forEach(function(bird){
-        if (bird.taxonID === action.bird.taxonID) {
+        if (bird.taxonOrder === action.bird.taxonOrder) {
           return
         }
         _myBirds.push(bird)
@@ -65,9 +64,9 @@ const Reducer = function ( state = initialState, action ) {
       })
 
     case T.SET_ACTIVE_PIN:
-      console.log(action.pin.id)
+      // console.log(action.pinId)
       return Object.assign({}, state, {
-        activePin: action.pin.id
+        activePin: action.pinId
       })
 
     case T.ADD_PIN:
