@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import Actions from '../Actions'
 
 class BirdListEl extends React.Component {
   render() {
@@ -12,5 +14,16 @@ class BirdListEl extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  addBird: bird => {
+    dispatch(Actions.addBird(bird))
+  }
+})
+
+BirdListEl = connect(
+  null,
+  mapDispatchToProps
+)(BirdListEl)
 
 export default BirdListEl

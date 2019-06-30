@@ -7,17 +7,15 @@ import Actions from './Actions'
 
 import BirdList from './components/BirdList'
 import MapContainer from './components/map/MapContainer.jsx'
-import MyBirdsListContainer from './components/MyBirdsListContainer'
+import MyBirdsList from './components/MyBirdsList'
 import ConnectedModal from './components/modal/ConnectedModal'
 import Spinner from './components/modal/Spinner'
 
-
 import PouchAppDb from '../data/PouchAppDb'
 
-// local json bird taxonomy
+// local json bird taxonomies
 import birdsShort from '../data/birdsShort'
 // import birdsFull from '../data/birdsFull'
-
 
 class App extends React.Component {
   render() {
@@ -30,7 +28,7 @@ class App extends React.Component {
           <MapContainer />
           <div id="columnFlexContainer">
             <BirdList />
-            <MyBirdsListContainer />
+            <MyBirdsList />
           </div>
         </div>
       </Provider >
@@ -46,7 +44,6 @@ ReactDOM.render(<App />, document.getElementById('root'))
 // fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
 //   .then( res => res.json() )
 //   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
-
 
 // load bird taxonony from local json
 Store.dispatch(Actions.birdsLoaded(birdsShort))

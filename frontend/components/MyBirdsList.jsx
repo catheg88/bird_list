@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import MyBirdsListElContainer from './MyBirdsListElContainer'
 
 class MyBirdsList extends React.Component {
@@ -15,5 +16,14 @@ class MyBirdsList extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  myBirds: state.myBirds
+})
+
+MyBirdsList = connect(
+  mapStateToProps,
+  null
+)(MyBirdsList)
 
 export default MyBirdsList

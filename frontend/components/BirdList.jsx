@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import SearchBar from './SearchBar'
-import BirdListElContainer from './BirdListElContainer'
+import BirdListEl from './BirdListEl'
 
 class BirdList extends React.Component {
   render() {
@@ -11,12 +11,12 @@ class BirdList extends React.Component {
     var birdCounter = 0
     this.props.birds.forEach (function(bird) {
       if (filterText === '') {
-        birdEls.push(<BirdListElContainer {...bird} key={bird.comName} />)
+        birdEls.push(<BirdListEl {...bird} key={bird.comName} />)
         birdCounter++
       } else {
         for (var index = 0; index < (bird.comName.length - filterText.length + 1 ); index++) {
           if (bird.comName.slice(index, index + filterText.length).toLowerCase() === filterText) {
-            birdEls.push(<BirdListElContainer {...bird} key={bird.comName}/>)
+            birdEls.push(<BirdListEl {...bird} key={bird.comName}/>)
             birdCounter++
             break
            }

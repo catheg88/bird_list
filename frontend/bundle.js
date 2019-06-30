@@ -15227,9 +15227,9 @@ var _MapContainer = __webpack_require__(269);
 
 var _MapContainer2 = _interopRequireDefault(_MapContainer);
 
-var _MyBirdsListContainer = __webpack_require__(290);
+var _MyBirdsList = __webpack_require__(291);
 
-var _MyBirdsListContainer2 = _interopRequireDefault(_MyBirdsListContainer);
+var _MyBirdsList2 = _interopRequireDefault(_MyBirdsList);
 
 var _ConnectedModal = __webpack_require__(295);
 
@@ -15255,11 +15255,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// local json bird taxonomy
+// local json bird taxonomies
 
 
 // import birdsFull from '../data/birdsFull'
-
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -15289,7 +15288,7 @@ var App = function (_React$Component) {
             'div',
             { id: 'columnFlexContainer' },
             _react2.default.createElement(_BirdList2.default, null),
-            _react2.default.createElement(_MyBirdsListContainer2.default, null)
+            _react2.default.createElement(_MyBirdsList2.default, null)
           )
         )
       );
@@ -15307,7 +15306,6 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.get
 // fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
 //   .then( res => res.json() )
 //   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
-
 
 // load bird taxonony from local json
 _Store2.default.dispatch(_Actions2.default.birdsLoaded(_birdsShort2.default));
@@ -28984,9 +28982,9 @@ var _SearchBar = __webpack_require__(258);
 
 var _SearchBar2 = _interopRequireDefault(_SearchBar);
 
-var _BirdListElContainer = __webpack_require__(267);
+var _BirdListEl = __webpack_require__(268);
 
-var _BirdListElContainer2 = _interopRequireDefault(_BirdListElContainer);
+var _BirdListEl2 = _interopRequireDefault(_BirdListEl);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29013,12 +29011,12 @@ var BirdList = function (_React$Component) {
       var birdCounter = 0;
       this.props.birds.forEach(function (bird) {
         if (filterText === '') {
-          birdEls.push(_react2.default.createElement(_BirdListElContainer2.default, _extends({}, bird, { key: bird.comName })));
+          birdEls.push(_react2.default.createElement(_BirdListEl2.default, _extends({}, bird, { key: bird.comName })));
           birdCounter++;
         } else {
           for (var index = 0; index < bird.comName.length - filterText.length + 1; index++) {
             if (bird.comName.slice(index, index + filterText.length).toLowerCase() === filterText) {
-              birdEls.push(_react2.default.createElement(_BirdListElContainer2.default, _extends({}, bird, { key: bird.comName })));
+              birdEls.push(_react2.default.createElement(_BirdListEl2.default, _extends({}, bird, { key: bird.comName })));
               birdCounter++;
               break;
             }
@@ -43007,45 +43005,7 @@ function matchesSelector(doc, selector) {
 
 
 /***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(5);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(13);
-
-var _BirdListEl = __webpack_require__(268);
-
-var _BirdListEl2 = _interopRequireDefault(_BirdListEl);
-
-var _Actions = __webpack_require__(29);
-
-var _Actions2 = _interopRequireDefault(_Actions);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    addBird: function addBird(bird) {
-      dispatch(_Actions2.default.addBird(bird));
-    }
-  };
-};
-
-var BirdListElContainer = (0, _reactRedux.connect)(null, mapDispatchToProps)(_BirdListEl2.default);
-
-exports.default = BirdListElContainer;
-
-/***/ }),
+/* 267 */,
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43061,6 +43021,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(13);
+
+var _Actions = __webpack_require__(29);
+
+var _Actions2 = _interopRequireDefault(_Actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43107,6 +43073,16 @@ var BirdListEl = function (_React$Component) {
 
   return BirdListEl;
 }(_react2.default.Component);
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addBird: function addBird(bird) {
+      dispatch(_Actions2.default.addBird(bird));
+    }
+  };
+};
+
+BirdListEl = (0, _reactRedux.connect)(null, mapDispatchToProps)(BirdListEl);
 
 exports.default = BirdListEl;
 
@@ -45785,35 +45761,7 @@ var MapMarker = function (_React$Component) {
 exports.default = MapMarker;
 
 /***/ }),
-/* 290 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _MyBirdsList = __webpack_require__(291);
-
-var _MyBirdsList2 = _interopRequireDefault(_MyBirdsList);
-
-var _reactRedux = __webpack_require__(13);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    myBirds: state.myBirds
-  };
-};
-
-var MyBirdsListContainer = (0, _reactRedux.connect)(mapStateToProps, null)(_MyBirdsList2.default);
-
-exports.default = MyBirdsListContainer;
-
-/***/ }),
+/* 290 */,
 /* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -45831,6 +45779,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(13);
 
 var _MyBirdsListElContainer = __webpack_require__(292);
 
@@ -45879,6 +45829,14 @@ var MyBirdsList = function (_React$Component) {
 
   return MyBirdsList;
 }(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    myBirds: state.myBirds
+  };
+};
+
+MyBirdsList = (0, _reactRedux.connect)(mapStateToProps, null)(MyBirdsList);
 
 exports.default = MyBirdsList;
 
