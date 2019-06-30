@@ -4,8 +4,8 @@ import BirdListElContainer from './BirdListElContainer'
 
 class BirdList extends React.Component {
   render() {
-    console.log('this.props.filterText')
-    console.log(this.props.filterText)
+    // console.log('this.props.filterText')
+    // console.log(this.props.filterText)
     var filterText = this.props.filterText.toLowerCase()
     var birdEls = []
     var birdCounter = 0

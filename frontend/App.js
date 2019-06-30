@@ -38,7 +38,6 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.getElementById('root'))
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
-
 fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
   .then( res => res.json() )
   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )

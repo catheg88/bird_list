@@ -15296,7 +15296,6 @@ var App = function (_React$Component) {
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
-
 fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json').then(function (res) {
   return res.json();
 }).then(function (json) {
@@ -29034,8 +29033,8 @@ var BirdList = function (_React$Component) {
   _createClass(BirdList, [{
     key: 'render',
     value: function render() {
-      console.log('this.props.filterText');
-      console.log(this.props.filterText);
+      // console.log('this.props.filterText')
+      // console.log(this.props.filterText)
       var filterText = this.props.filterText.toLowerCase();
       var birdEls = [];
       var birdCounter = 0;
@@ -29124,23 +29123,14 @@ var SearchBar = function (_React$Component) {
   }
 
   _createClass(SearchBar, [{
-    key: 'handleTextChange',
-    value: function handleTextChange(e) {
-      console.log(e.target.value);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         { id: 'searchBar' },
         _react2.default.createElement('input', {
           type: 'text',
-          onChange: function onChange() {
-            return _this2.handleTextChange.bind(_this2);
-          },
+          onChange: this.props.handleTextChange,
           placeholder: 'Search by bird name'
         })
       );
@@ -29152,8 +29142,9 @@ var SearchBar = function (_React$Component) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    handleTextChange: function handleTextChange(filterText) {
-      return dispatch(_Actions2.default.textChange(filterText));
+    handleTextChange: function handleTextChange(e) {
+      console.log(e.target.value);
+      dispatch(_Actions2.default.textChange(e.target.value));
     }
   };
 };

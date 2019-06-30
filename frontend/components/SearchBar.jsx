@@ -4,16 +4,12 @@ import Actions from '../Actions'
 
 class SearchBar extends React.Component {
 
-  handleTextChange(e){
-    console.log(e.target.value)
-  }
-
   render() {
     return (
       <div id="searchBar">
         <input
           type="text"
-          onChange={() => this.handleTextChange.bind(this)}
+          onChange={this.props.handleTextChange}
           placeholder="Search by bird name"
           ></input>
       </div>
@@ -22,7 +18,10 @@ class SearchBar extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleTextChange: filterText => dispatch(Actions.textChange(filterText))
+  handleTextChange: e => {
+    console.log(e.target.value)
+    dispatch(Actions.textChange(e.target.value))
+  }
 })
 
 SearchBar = connect(
