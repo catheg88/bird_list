@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Actions from '../../Actions'
 
 import GoogleMapReact from 'google-map-react'
 import GOOGLE_API_KEY from '../../../apiKey'
 
 import MapMarker from './MapMarker'
-import Actions from '../../Actions'
 
 class MapContainer extends React.Component {
 

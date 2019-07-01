@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import MyBirdsListElContainer from './MyBirdsListElContainer'
+
+import MyBirdsListEl from './MyBirdsListEl'
 
 class MyBirdsList extends React.Component {
   render() {
     var myBirdsEls = []
     this.props.myBirds.forEach (function(bird) {
-      myBirdsEls.push(<MyBirdsListElContainer {...bird} key={bird.comName} />)
+      myBirdsEls.push(<MyBirdsListEl {...bird} key={bird.comName} />)
     })
     return (
       <div>

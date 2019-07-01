@@ -2,20 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import Store from './Store'
-import Actions from './Actions'
+import Store from '../Store'
+import Actions from '../Actions'
 
-import BirdList from './components/BirdList'
-import MapContainer from './components/map/MapContainer.jsx'
-import MyBirdsList from './components/MyBirdsList'
-import ConnectedModal from './components/modal/ConnectedModal'
-import Spinner from './components/modal/Spinner'
+import BirdList from './birdLists/BirdList'
+import MapContainer from './map/MapContainer'
+import MyBirdsList from './birdLists/MyBirdsList'
+import ConnectedModal from './modal/ConnectedModal'
+import Spinner from './modal/Spinner'
 
-import PouchAppDb from '../data/PouchAppDb'
-
-// local json bird taxonomies
-import birdsShort from '../data/birdsShort'
-// import birdsFull from '../data/birdsFull'
+import PouchAppDb from '../../data/PouchAppDb'
+// local json bird taxonomies (skip api call to ebird)
+import birdsShort from '../../data/birdsShort'
+// import birdsFull from '../../data/birdsFull'
 
 class App extends React.Component {
   render() {
@@ -25,7 +24,6 @@ class App extends React.Component {
           <ConnectedModal >
             <Spinner />
           </ConnectedModal >
-          <MapContainer />
           <div id="columnFlexContainer">
             <BirdList />
             <MyBirdsList />
@@ -35,17 +33,18 @@ class App extends React.Component {
     )
   }
 }
+// <MapContainer />
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
 
-// api request to ebird for bird taxonony
+// api call to ebird for bird taxonony
 // fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
 //   .then( res => res.json() )
 //   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
 
-// load bird taxonony from local json
+// load bird taxonony from local json (skip api call to ebird)
 Store.dispatch(Actions.birdsLoaded(birdsShort))
 // Store.dispatch(Actions.birdsLoaded(birdsFull))
 
