@@ -42849,19 +42849,17 @@ var BirdList = function (_React$Component) {
   _createClass(BirdList, [{
     key: 'render',
     value: function render() {
-      var filterText = this.props.filterText;
+      var filterText = this.props.filterText.toLowerCase();
       var birdEls = [];
-      var birdCounter = 0;
       this.props.birds.forEach(function (bird) {
-        if (filterText === '') {
+        if (filterText === '***') {
           birdEls.push(_react2.default.createElement(_BirdListEl2.default, _extends({}, bird, { key: bird.comName })));
-          birdCounter++;
+        } else if (!filterText) {
+          birdEls = [];
         } else {
           for (var index = 0; index < bird.comName.length - filterText.length + 1; index++) {
             if (bird.comName.slice(index, index + filterText.length).toLowerCase() === filterText) {
               birdEls.push(_react2.default.createElement(_BirdListEl2.default, _extends({}, bird, { key: bird.comName })));
-              birdCounter++;
-              break;
             }
           }
         }
@@ -42879,8 +42877,7 @@ var BirdList = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          birdCounter,
-          ' results'
+          filterText ? birdEls.length + ' results' : null
         ),
         _react2.default.createElement(
           'div',
@@ -45789,7 +45786,7 @@ var MyBirdsList = function (_React$Component) {
         _react2.default.createElement(
           'h2',
           null,
-          'MyBirds'
+          'My Birds'
         ),
         _react2.default.createElement(
           'div',

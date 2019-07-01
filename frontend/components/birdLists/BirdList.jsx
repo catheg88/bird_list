@@ -6,19 +6,17 @@ import BirdListEl from './BirdListEl'
 
 class BirdList extends React.Component {
   render() {
-    var filterText = this.props.filterText
+    var filterText = this.props.filterText.toLowerCase()
     var birdEls = []
-    var birdCounter = 0
     this.props.birds.forEach (function(bird) {
-      if (filterText === '') {
+      if (filterText === '***') {
         birdEls.push(<BirdListEl {...bird} key={bird.comName} />)
-        birdCounter++
+      } else if (!filterText) {
+        birdEls = []
       } else {
         for (var index = 0; index < (bird.comName.length - filterText.length + 1 ); index++) {
           if (bird.comName.slice(index, index + filterText.length).toLowerCase() === filterText) {
             birdEls.push(<BirdListEl {...bird} key={bird.comName}/>)
-            birdCounter++
-            break
            }
         }
       }
@@ -28,7 +26,7 @@ class BirdList extends React.Component {
       <div id="birdList">
         <h2>All Birds</h2>
         <SearchBar />
-        <div>{birdCounter} results</div>
+        <div>{filterText ? birdEls.length + ' results' : null}</div>
         <div>{birdEls}</div>
       </div>
     )
