@@ -25,15 +25,15 @@ class App extends React.Component {
             <Spinner />
           </ConnectedModal >
           <MapContainer />
+          <div id="columnFlexContainer">
+            <BirdList />
+            <MyBirdsList />
+          </div>
         </div>
       </Provider >
     )
   }
 }
-// <div id="columnFlexContainer">
-//   <BirdList />
-//   <MyBirdsList />
-// </div>
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
