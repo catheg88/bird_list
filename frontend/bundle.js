@@ -15152,7 +15152,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _exenv = __webpack_require__(297);
+var _exenv = __webpack_require__(296);
 
 var _exenv2 = _interopRequireDefault(_exenv);
 
@@ -15200,15 +15200,15 @@ var _MapContainer = __webpack_require__(267);
 
 var _MapContainer2 = _interopRequireDefault(_MapContainer);
 
-var _MyBirdsList = __webpack_require__(288);
+var _MyBirdsList = __webpack_require__(287);
 
 var _MyBirdsList2 = _interopRequireDefault(_MyBirdsList);
 
-var _ConnectedModal = __webpack_require__(290);
+var _ConnectedModal = __webpack_require__(289);
 
 var _ConnectedModal2 = _interopRequireDefault(_ConnectedModal);
 
-var _Spinner = __webpack_require__(298);
+var _Spinner = __webpack_require__(297);
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
@@ -15216,7 +15216,7 @@ var _PouchAppDb = __webpack_require__(107);
 
 var _PouchAppDb2 = _interopRequireDefault(_PouchAppDb);
 
-var _birdsShort = __webpack_require__(299);
+var _birdsShort = __webpack_require__(298);
 
 var _birdsShort2 = _interopRequireDefault(_birdsShort);
 
@@ -15255,12 +15255,7 @@ var App = function (_React$Component) {
             null,
             _react2.default.createElement(_Spinner2.default, null)
           ),
-          _react2.default.createElement(
-            'div',
-            { id: 'columnFlexContainer' },
-            _react2.default.createElement(_BirdList2.default, null),
-            _react2.default.createElement(_MyBirdsList2.default, null)
-          )
+          _react2.default.createElement(_MapContainer2.default, null)
         )
       );
     }
@@ -15268,7 +15263,10 @@ var App = function (_React$Component) {
 
   return App;
 }(_react2.default.Component);
-// <MapContainer />
+// <div id="columnFlexContainer">
+//   <BirdList />
+//   <MyBirdsList />
+// </div>
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
@@ -43084,11 +43082,11 @@ var _googleMapReact = __webpack_require__(268);
 
 var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
 
-var _apiKey = __webpack_require__(286);
+var _apiKey = __webpack_require__(299);
 
 var _apiKey2 = _interopRequireDefault(_apiKey);
 
-var _MapMarker = __webpack_require__(287);
+var _MapMarker = __webpack_require__(286);
 
 var _MapMarker2 = _interopRequireDefault(_MapMarker);
 
@@ -45667,20 +45665,6 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var GOOGLE_API_KEY = 'AIzaSyBnuSKTrF1aujuFGmyOl8JeuqlgrFDeUak';
-
-exports.default = GOOGLE_API_KEY;
-
-/***/ }),
-/* 287 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -45732,7 +45716,7 @@ var MapMarker = function (_React$Component) {
 exports.default = MapMarker;
 
 /***/ }),
-/* 288 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45752,7 +45736,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(14);
 
-var _MyBirdsListEl = __webpack_require__(289);
+var _MyBirdsListEl = __webpack_require__(288);
 
 var _MyBirdsListEl2 = _interopRequireDefault(_MyBirdsListEl);
 
@@ -45811,7 +45795,7 @@ MyBirdsList = (0, _reactRedux.connect)(mapStateToProps, null)(MyBirdsList);
 exports.default = MyBirdsList;
 
 /***/ }),
-/* 289 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45895,7 +45879,7 @@ MyBirdsListEl = (0, _reactRedux.connect)(null, mapDispatchToProps)(MyBirdsListEl
 exports.default = MyBirdsListEl;
 
 /***/ }),
-/* 290 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45911,7 +45895,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(14);
 
-var _reactModal = __webpack_require__(291);
+var _reactModal = __webpack_require__(290);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
@@ -45949,7 +45933,7 @@ var ConnectedModal = (0, _reactRedux.connect)(mapStateToProps, null)(_reactModal
 exports.default = ConnectedModal;
 
 /***/ }),
-/* 291 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45959,7 +45943,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Modal = __webpack_require__(292);
+var _Modal = __webpack_require__(291);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -45969,7 +45953,7 @@ exports.default = _Modal2.default;
 module.exports = exports['default'];
 
 /***/ }),
-/* 292 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45996,7 +45980,7 @@ var _propTypes = __webpack_require__(22);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ModalPortal = __webpack_require__(293);
+var _ModalPortal = __webpack_require__(292);
 
 var _ModalPortal2 = _interopRequireDefault(_ModalPortal);
 
@@ -46196,7 +46180,7 @@ exports.default = Modal;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 293 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46218,11 +46202,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = __webpack_require__(22);
 
-var _focusManager = __webpack_require__(294);
+var _focusManager = __webpack_require__(293);
 
 var focusManager = _interopRequireWildcard(_focusManager);
 
-var _scopeTab = __webpack_require__(295);
+var _scopeTab = __webpack_require__(294);
 
 var _scopeTab2 = _interopRequireDefault(_scopeTab);
 
@@ -46234,7 +46218,7 @@ var _refCount = __webpack_require__(123);
 
 var refCount = _interopRequireWildcard(_refCount);
 
-var _bodyClassList = __webpack_require__(296);
+var _bodyClassList = __webpack_require__(295);
 
 var bodyClassList = _interopRequireWildcard(_bodyClassList);
 
@@ -46563,7 +46547,7 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 294 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46656,7 +46640,7 @@ function teardownScopedFocus() {
 }
 
 /***/ }),
-/* 295 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46691,7 +46675,7 @@ function scopeTab(node, event) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 296 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46728,7 +46712,7 @@ function remove(bodyClass) {
 }
 
 /***/ }),
-/* 297 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -46775,7 +46759,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 298 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46825,7 +46809,7 @@ var Spinner = function (_React$Component) {
 exports.default = Spinner;
 
 /***/ }),
-/* 299 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47125,6 +47109,20 @@ var Birds = [{
 }];
 
 exports.default = Birds;
+
+/***/ }),
+/* 299 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var GOOGLE_API_KEY = 'AIzaSyBnuSKTrF1aujuFGmyOl8JeuqlgrFDeUak';
+
+exports.default = GOOGLE_API_KEY;
 
 /***/ })
 /******/ ]);

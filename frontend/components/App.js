@@ -24,16 +24,16 @@ class App extends React.Component {
           <ConnectedModal >
             <Spinner />
           </ConnectedModal >
-          <div id="columnFlexContainer">
-            <BirdList />
-            <MyBirdsList />
-          </div>
+          <MapContainer />
         </div>
       </Provider >
     )
   }
 }
-// <MapContainer />
+// <div id="columnFlexContainer">
+//   <BirdList />
+//   <MyBirdsList />
+// </div>
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
