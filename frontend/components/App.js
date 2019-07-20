@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 
 import Store from '../Store'
 import Actions from '../Actions'
@@ -19,23 +19,58 @@ import birdsShort from '../../data/birdsShort'
 class App extends React.Component {
   render() {
     return (
-      <Provider store={Store} >
-        <div>
-          <ConnectedModal >
-            <Spinner />
-          </ConnectedModal >
-          <MapContainer />
-          <div id="columnFlexContainer">
-            <BirdList />
-            <MyBirdsList />
-          </div>
+      <div>
+        <ConnectedModal >
+          <Spinner />
+        </ConnectedModal >
+        <MapContainer />
+        <div id="columnFlexContainer">
+          <BirdList />
+          <MyBirdsList />
         </div>
-      </Provider >
+      </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const mapStateToProps = state => ({
+  birdSightingForm: state.birdSightingForm
+})
+
+App = connect(
+  mapStateToProps,
+  null
+)(App)
+
+ReactDOM.render(
+  <Provider store={Store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
+
+// class App extends React.Component {
+//   render() {
+//     console.log(this.state)
+//     return (
+//       <Provider store={Store} >
+//         <div>
+//           <ConnectedModal >
+//             <Spinner />
+//           </ConnectedModal >
+//           <MapContainer />
+//
+//           <div id="columnFlexContainer">
+//             <BirdList />
+//             <MyBirdsList />
+//           </div>
+//         </div>
+//       </Provider >
+//     )
+//   }
+// }
+//
+// ReactDOM.render(<App />, document.getElementById('root'))
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
 

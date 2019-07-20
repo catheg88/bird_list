@@ -3773,6 +3773,12 @@ var Actions = {
       type: T.SET_PINS,
       pins: pins
     };
+  },
+
+  openEnterSighting: function openEnterSighting() {
+    return {
+      type: T.OPEN_ENTER_SIGHTING
+    };
   }
 };
 
@@ -12990,6 +12996,7 @@ var LOADED = exports.LOADED = 'LOADED';
 var ADD_PIN = exports.ADD_PIN = 'ADD_PIN';
 var SET_PINS = exports.SET_PINS = 'SET_PINS';
 var SET_ACTIVE_PIN = exports.SET_ACTIVE_PIN = 'SET_ACTIVE_PIN';
+var OPEN_ENTER_SIGHTING = exports.OPEN_ENTER_SIGHTING = 'OPEN_ENTER_SIGHTING';
 
 /***/ }),
 /* 107 */
@@ -15245,23 +15252,19 @@ var App = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactRedux.Provider,
-        { store: _Store2.default },
+        'div',
+        null,
+        _react2.default.createElement(
+          _ConnectedModal2.default,
+          null,
+          _react2.default.createElement(_Spinner2.default, null)
+        ),
+        _react2.default.createElement(_MapContainer2.default, null),
         _react2.default.createElement(
           'div',
-          null,
-          _react2.default.createElement(
-            _ConnectedModal2.default,
-            null,
-            _react2.default.createElement(_Spinner2.default, null)
-          ),
-          _react2.default.createElement(_MapContainer2.default, null),
-          _react2.default.createElement(
-            'div',
-            { id: 'columnFlexContainer' },
-            _react2.default.createElement(_BirdList2.default, null),
-            _react2.default.createElement(_MyBirdsList2.default, null)
-          )
+          { id: 'columnFlexContainer' },
+          _react2.default.createElement(_BirdList2.default, null),
+          _react2.default.createElement(_MyBirdsList2.default, null)
         )
       );
     }
@@ -15270,7 +15273,42 @@ var App = function (_React$Component) {
   return App;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    birdSightingForm: state.birdSightingForm
+  };
+};
+
+App = (0, _reactRedux.connect)(mapStateToProps, null)(App);
+
+_reactDom2.default.render(_react2.default.createElement(
+  _reactRedux.Provider,
+  { store: _Store2.default },
+  _react2.default.createElement(App, null)
+), document.getElementById('root'));
+
+// class App extends React.Component {
+//   render() {
+//     console.log(this.state)
+//     return (
+//       <Provider store={Store} >
+//         <div>
+//           <ConnectedModal >
+//             <Spinner />
+//           </ConnectedModal >
+//           <MapContainer />
+//
+//           <div id="columnFlexContainer">
+//             <BirdList />
+//             <MyBirdsList />
+//           </div>
+//         </div>
+//       </Provider >
+//     )
+//   }
+// }
+//
+// ReactDOM.render(<App />, document.getElementById('root'))
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
 
@@ -28807,7 +28845,8 @@ var initialState = {
   myBirds: [],
   modalOpen: true,
   pins: [],
-  activePin: null
+  activePin: null,
+  birdSightingForm: false
 };
 
 var Reducer = function Reducer() {
@@ -28882,6 +28921,11 @@ var Reducer = function Reducer() {
     case T.SET_PINS:
       return Object.assign({}, state, {
         pins: action.pins
+      });
+
+    case T.OPEN_ENTER_SIGHTING:
+      return Object.assign({}, state, {
+        birdSightingForm: true
       });
 
     default:
@@ -43163,6 +43207,14 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    // addSighting: coords => {
+    //   // drop x and y axis data from coords, since the pin will be written to db
+    //   var _coords = {
+    //     lat: coords.lat,
+    //     lng: coords.lng
+    //   }
+    //   dispatch(Actions.addPin(_coords))
+    // },
     addPin: function addPin(coords) {
       // drop x and y axis data from coords, since the pin will be written to db
       var _coords = {
@@ -43170,6 +43222,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         lng: coords.lng
       };
       dispatch(_Actions2.default.addPin(_coords));
+      dispatch(_Actions2.default.openEnterSighting());
     },
     setActivePin: function setActivePin(id) {
       dispatch(_Actions2.default.setActivePin(id));

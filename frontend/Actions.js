@@ -94,6 +94,10 @@ const Actions = {
   setPins: pins => ({
     type: T.SET_PINS,
     pins
+  }),
+
+  openEnterSighting: () => ({
+    type: T.OPEN_ENTER_SIGHTING
   })
 }
 

@@ -50,6 +50,14 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  // addSighting: coords => {
+  //   // drop x and y axis data from coords, since the pin will be written to db
+  //   var _coords = {
+  //     lat: coords.lat,
+  //     lng: coords.lng
+  //   }
+  //   dispatch(Actions.addPin(_coords))
+  // },
   addPin: coords => {
     // drop x and y axis data from coords, since the pin will be written to db
     var _coords = {
@@ -57,6 +65,7 @@ const mapDispatchToProps = dispatch => ({
       lng: coords.lng
     }
     dispatch(Actions.addPin(_coords))
+    dispatch(Actions.openEnterSighting())
   },
   setActivePin: id => {
     dispatch(Actions.setActivePin(id))

@@ -6,7 +6,8 @@ const initialState = {
   myBirds: [],
   modalOpen: true,
   pins: [],
-  activePin: null
+  activePin: null,
+  birdSightingForm: false
 }
 
 const Reducer = function ( state = initialState, action ) {
@@ -78,6 +79,11 @@ const Reducer = function ( state = initialState, action ) {
     case T.SET_PINS:
       return Object.assign({}, state, {
         pins: action.pins
+      })
+
+    case T.OPEN_ENTER_SIGHTING:
+      return Object.assign({}, state, {
+        birdSightingForm: true
       })
 
     default:
