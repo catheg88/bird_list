@@ -10,6 +10,7 @@ import MapContainer from './map/MapContainer'
 import MyBirdsList from './birdLists/MyBirdsList'
 import ConnectedModal from './modal/ConnectedModal'
 import Spinner from './modal/Spinner'
+import BirdSighting from './birdSighting/BirdSighting.jsx'
 
 import PouchAppDb from '../../data/PouchAppDb'
 // local json bird taxonomies (skip api call to ebird)
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Spinner />
         </ConnectedModal >
         <MapContainer />
+        {this.props.birdSightingForm ? <BirdSighting /> : null}
         <div id="columnFlexContainer">
           <BirdList />
           <MyBirdsList />
@@ -69,19 +71,16 @@ ReactDOM.render(
 //     )
 //   }
 // }
-//
-// ReactDOM.render(<App />, document.getElementById('root'))
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
 
 // api call to ebird for bird taxonony
-// fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
-//   .then( res => res.json() )
-//   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
-
-// load bird taxonony from local json (skip api call to ebird)
-Store.dispatch(Actions.birdsLoaded(birdsShort))
-// Store.dispatch(Actions.birdsLoaded(birdsFull))
+  // fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
+  //   .then( res => res.json() )
+  //   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
+// load bird taxonomy (short or full) from local json (skip api call to ebird)
+  Store.dispatch(Actions.birdsLoaded(birdsShort))
+  // Store.dispatch(Actions.birdsLoaded(birdsFull))
 
 PouchAppDb.find({
   selector: { dataType: 'bird'}

@@ -15219,6 +15219,10 @@ var _Spinner = __webpack_require__(298);
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
+var _BirdSighting = __webpack_require__(300);
+
+var _BirdSighting2 = _interopRequireDefault(_BirdSighting);
+
 var _PouchAppDb = __webpack_require__(107);
 
 var _PouchAppDb2 = _interopRequireDefault(_PouchAppDb);
@@ -15260,6 +15264,7 @@ var App = function (_React$Component) {
           _react2.default.createElement(_Spinner2.default, null)
         ),
         _react2.default.createElement(_MapContainer2.default, null),
+        this.props.birdSightingForm ? _react2.default.createElement(_BirdSighting2.default, null) : null,
         _react2.default.createElement(
           'div',
           { id: 'columnFlexContainer' },
@@ -15307,8 +15312,6 @@ _reactDom2.default.render(_react2.default.createElement(
 //     )
 //   }
 // }
-//
-// ReactDOM.render(<App />, document.getElementById('root'))
 
 // lazily, we'll just ask the store to dispatch some initial setup requests itself
 
@@ -15316,8 +15319,7 @@ _reactDom2.default.render(_react2.default.createElement(
 // fetch('https://ebird.org/ws2.0/ref/taxonomy/ebird?cat=species&fmt=json')
 //   .then( res => res.json() )
 //   .then( json => Store.dispatch(Actions.birdsLoaded(json)) )
-
-// load bird taxonony from local json (skip api call to ebird)
+// load bird taxonomy (short or full) from local json (skip api call to ebird)
 _Store2.default.dispatch(_Actions2.default.birdsLoaded(_birdsShort2.default));
 // Store.dispatch(Actions.birdsLoaded(birdsFull))
 
@@ -47178,6 +47180,58 @@ var Birds = [{
 }];
 
 exports.default = Birds;
+
+/***/ }),
+/* 300 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(14);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BirdSighting = function (_React$Component) {
+  _inherits(BirdSighting, _React$Component);
+
+  function BirdSighting() {
+    _classCallCheck(this, BirdSighting);
+
+    return _possibleConstructorReturn(this, (BirdSighting.__proto__ || Object.getPrototypeOf(BirdSighting)).apply(this, arguments));
+  }
+
+  _createClass(BirdSighting, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'hi'
+      );
+    }
+  }]);
+
+  return BirdSighting;
+}(_react2.default.Component);
+
+exports.default = BirdSighting;
 
 /***/ })
 /******/ ]);
